@@ -8,7 +8,7 @@ then to declare a pointer why not pointer p ?
 
 it is because the type of pointer tells us the amt of memory we
 can dereference with it 
-for int it is 4 bytes, char 1 byte, float 8 bytes
+for int or float it is 4 bytes, char 1 byte, double 8 bytes
 */
 
 int main()
