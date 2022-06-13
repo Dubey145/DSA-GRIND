@@ -18,8 +18,9 @@ class fraction
             {
                 cout<<nr<<"/"<<dr<<endl;  
             }
-        fraction add_fraction(fraction f)
+        fraction add_fraction(fraction &f)
             {
+                //we create a reference to the argument to avoid unnecessary copying 
                 //result stored in f1
                 this->nr = this->nr * f.dr + f.nr *this->dr;
                 this->dr = this->dr * f.dr;
@@ -71,13 +72,19 @@ class fraction
                 fraction fnew(n,d); 
                 return fnew;
             }
-
+        bool operator== (fraction f)
+            {
+                return(nr == f.nr && dr == f.dr );
+            }
+        
     };
 
 int main()
     {
         fraction f1(2,5);
         fraction f2(4,6);
+        cout<<(f1==f2)<<endl;
+            
         
         cout<<"fraction sum =" ;
 
@@ -87,5 +94,6 @@ int main()
         //this will have f3 and f2 will be treated as an argument
         cout<<endl;
         f4.print();
+        
         return 0;
     }
