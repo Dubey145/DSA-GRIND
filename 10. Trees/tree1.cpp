@@ -75,7 +75,7 @@ tree_node* level_input()
                 for(int i =0;i<children;i++)
                     {
                         int child_data;
-                        cout<<"enter "<<i<<"th child : "<<
+                        cout<<"enter "<<i<<"th child : "<<;
                     }
             }
     }
