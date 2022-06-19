@@ -75,15 +75,86 @@ node* insert_at_index(int index,node *head)
         return head;
     }
 
+void delete_at_i(node * head,int index)
+    {
+        //traverse to that node 
+        node * temp = head;
+        for(int i=0;i<index;i++)
+            {
+                temp = temp->next;
+            }
+        temp->next = temp->next->next;
+        
+    }
+node*  Rinsert(node *head,node *new_data,int index)
+    {
+        if(index == 0)
+            {
+                new_data->next = head;
+                head = new_data;
+                return (head);
+            }
+        else 
+            {
+                node *temp_head;
+                temp_head = Rinsert(head->next,new_data,index-1);
+                head->next = temp_head;
+                return(head);
+            }
+    }
+int recursive_length(node * head)
+    {
+        if (head == NULL)
+            {
+                return 0;
+            }
+        else 
+            {
+                return 1 + recursive_length(head->next);
+            }
+    }
+node* recursive_insert(node * head)
+    {
+        cout<<"enter index and data to insert";
+        int data;
+        int index;
+        cin>>data>>index;
+        node *new_node = new node(data);
+        node *temp = head;
+        head = Rinsert(temp,new_node,index);
+        return head;
+    }
+
+node* recursive_delete(node *head, int index)
+    {
+        if(index == 0)
+            {
+                return head;
+            }
+        else 
+            {
+                node *temp_head;
+                temp_head = recursive_delete(head,index-1);
+                temp_head->
+            }
+    }
+
 int main()
     {
         node * head = userip();
         //insert at a specific index 
-        int index;
-        cout<<"enter index for insertion";
-        cin>>index;
-        head = insert_at_index(index,head); // if an element is inserted at index 0 then the head has to be updated
-        head->printLL(head);
+        // int index;
+        // //cout<<"enter index for insertion";
+        // cout<<"length of the LL is : "<<recursive_length(head);
+        // cout<<"enter index for deletion";
+        // cin>>index;
+        // //head = insert_at_index(index,head); // if an element is inserted at index 0 then the head has to be updated
+        // //head->printLL(head);
+        // delete_at_i(head,index);
+        // head->printLL(head);
 
+        head = recursive_insert(head);
+        head->printLL(head);
+        
         return 0;
     }
