@@ -51,7 +51,7 @@ node * userip() // time complexity of this function is O(n)
         return head;
     }
 
-node* insert_at_index(int index,node *head)
+void insert_at_index(int index,node *head)
     {
         node *temp = head;
         cout<<"enter data to insert";
@@ -63,7 +63,6 @@ node* insert_at_index(int index,node *head)
                 newdata->next = head->next;
                 head = newdata;
                 head->printLL(head);
-                return head;
             }
         for(int i=0;i<index-1;i++)
             {
@@ -72,7 +71,6 @@ node* insert_at_index(int index,node *head)
         newdata->next = temp->next;
         temp->next = newdata;
         head->printLL(head);
-        return head;
     }
 
 void delete_at_i(node * head,int index)
@@ -129,32 +127,139 @@ node* recursive_delete(node *head, int index)
     {
         if(index == 0)
             {
-                return head;
+                return head->next;
             }
         else 
             {
                 node *temp_head;
-                temp_head = recursive_delete(head,index-1);
-                temp_head->
+                temp_head = recursive_delete(head->next,index-1);
+                head->next = temp_head;
+                return (head);
             }
+    }
+int find(node * head,int data)
+    {
+        node* temp = head;
+        int index = 0;
+        while (temp != NULL)
+            {
+                if(head->data == data)
+                    {
+                        return index;
+                    }
+                else
+                    {
+                        index ++;
+                        temp = temp->next;
+                    }
+            }
+        return -1;
+    }
+
+node* append(node * head, int index)
+    {
+        node* temp = head;
+        node * tail = head;
+        int i =0;
+        while (temp->next != NULL)
+            {
+                if(i < index-1) 
+                    {
+                        tail = tail->next; 
+                    }
+                temp = temp->next;
+                i++;
+            }
+        temp->next = head;
+        head = tail->next;
+        tail->next = NULL;
+        return (head);
+        
     }
 
 int main()
     {
-        node * head = userip();
+        // creating a menu is pending 
+        node * head;
+        int flag = 0;
+        char ch = 'y';
+        while(ch == 'y')
+            {   
+                cout<<"------Menu------\n1.Input LL\n2.Length\n3.Find Element\n4.Insert at index\n5.Delete at index\n6.Recursive Insert\n7.Recursive Delete\n8.Append N nodes\n";
+                int choice;
+                int index;
+                cin>>choice;
+                
+                if(choice>2)
+                    {
+                        if(flag ==  0)
+                            {
+                                head = userip();
+                                flag = 1;
+                            }
+                        cout<<"enter index for operation: (-1 if not required)";
+                        cin>>index;
+                    }
+                switch(choice)
+                    {
+                        case 1 :  
+                                head = userip();
+                                flag = 1;
+                                break;
+                        case 2 : 
+                                cout<<recursive_length(head);
+                                break;
+                        case 3 : 
+                                {
+                                    int data;
+                                    cout<<"enter data to find";
+                                    cin>>data;
+                                    int index = find(head,data);
+                                    if(index==-1)
+                                        {
+                                            cout<<"\nelement not found\n";
+                                        }
+                                    else 
+                                        {
+                                            cout<<"\nelement found at index : \n"<<index;
+                                        }
+                                }
+                                break;
+                        case 4 :
+                                insert_at_index(index,head); 
+                                break; 
+                        case 5:  
+                                delete_at_i(head,index);
+                                break; 
+                        case 6 : 
+                                recursive_insert(head); 
+                                break;
+                        case 7 : 
+                                recursive_delete(head,index);
+                                break;
+                        case 8 : 
+                                {
+                                    head = append(head,index);
+                                    head->printLL(head);
+                                    break;
+                                }
+                                
+                        
+                                 
+                    }
+                cout<<"\n do you want to perform more operations? (y/n)";
+                cin>>ch;
+            }
         //insert at a specific index 
-        // int index;
-        // //cout<<"enter index for insertion";
+        //int index;
+        // //
         // cout<<"length of the LL is : "<<recursive_length(head);
-        // cout<<"enter index for deletion";
-        // cin>>index;
-        // //head = insert_at_index(index,head); // if an element is inserted at index 0 then the head has to be updated
+        // // // if an element is inserted at index 0 then the head has to be updated
         // //head->printLL(head);
         // delete_at_i(head,index);
         // head->printLL(head);
 
-        head = recursive_insert(head);
-        head->printLL(head);
+        //head = recursive_insert(head);
         
         return 0;
     }
