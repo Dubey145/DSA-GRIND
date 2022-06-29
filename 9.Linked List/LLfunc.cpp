@@ -187,6 +187,21 @@ void getmid(node * head, int index)
         cout<<"mid element is: "<<temp->data<<endl;
     }
 
+node* reverseLL_recursive(node* head)
+    {
+        if(head->next == NULL) 
+            return head; 
+        node * temp = reverseLL_recursive(head->next);
+        node * last = temp;
+        while (last->next != NULL) 
+            {
+                last = last->next;
+            }
+        last->next = head;
+        head->next = NULL;
+        return temp;
+    }
+
 int main()
     {
         // creating a menu is pending 
@@ -195,7 +210,7 @@ int main()
         char ch = 'y';
         while(ch == 'y')
             {   
-                cout<<"------Menu------\n1.Input LL\n2.Length\n3.Find Element\n4.Insert at index\n5.Delete at index\n6.Recursive Insert\n7.Recursive Delete\n8.Append N nodes\n9.Find midpoint";
+                cout<<"------Menu------\n1.Input LL\n2.Length\n3.Find Element\n4.Insert at index\n5.Delete at index\n6.Recursive Insert\n7.Recursive Delete\n8.Append N nodes\n9.Find midpoint\n10. Reverse LL (recursion)\n";
                 int choice;
                 int index;
                 cin>>choice;
@@ -257,8 +272,15 @@ int main()
                             {
                                 int mid = (recursive_length(head))/2;
                                 getmid(head,mid);
+                                break;
                             }
-
+                        case 10:
+                            {
+                                head = reverseLL_recursive(head);
+                                cout<<"\n current status of LL :";
+                                head->printLL(head);
+                                break;
+                            }
                         
                                  
                     }
