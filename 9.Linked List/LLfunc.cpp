@@ -20,7 +20,7 @@ class node
                     }
             }
     };
-class pair
+class hnt
     {
         public:
         node * head;
@@ -209,38 +209,56 @@ node* reverseLL_recursive(node* head)
         return temp;
     }
 
-pair recursive_reverseLL_n(node* head)
+hnt recursive_reverseLL_n(node* head) // not reversing for now dry-run and check
     {
         //lets maintain a tail pointer
         if (head->next != NULL) 
             {
-                pair ans;
+                hnt ans;
                 ans.head = head;
                 ans.tail = head;//for length 1 head and tail are the same
-                return answer
+                return ans;
             }
-        pair temp = recursive_reverseLL_n(head->next);
-        tail->next = head;
-        head->next = temp;
-        tail = head;
+        hnt temp = recursive_reverseLL_n(head->next);
+        temp.tail->next = head;
+        head->next = NULL;
 
-        pair answer;
+        hnt answer;
         answer.head = temp.head; 
-        answer.tail = temp.tail;
+        answer.tail = head;
 
         return answer;
-        //pending
-
+    }
+node * revll(node* head) //this function will return only the head 
+    {
+        return recursive_reverseLL_n(head).head;
+    }
+node* iterative_reverse(node* head) 
+    {
+        node * current = head;
+        node * prev = NULL; 
+        node * nxt = NULL;
+        while(nxt != NULL)
+            {
+                nxt = current->next;
+                current->next = prev;
+                prev = current;
+                current = nxt;
+                nxt = nxt->next;
+            }
+        return current;
     }
 int main()
     {
         // creating a menu is pending 
         node * head;
+        node * tail;
+        hnt p;
         int flag = 0;
         char ch = 'y';
         while(ch == 'y')
             {   
-                cout<<"------Menu------\n1.Input LL\n2.Length\n3.Find Element\n4.Insert at index\n5.Delete at index\n6.Recursive Insert\n7.Recursive Delete\n8.Append N nodes\n9.Find midpoint\n10. Reverse LL (recursion n^2)\n11.Reverse LL (recursion n)\n";
+                cout<<"------Menu------\n1.Input LL\n2.Length\n3.Find Element\n4.Insert at index\n5.Delete at index\n6.Recursive Insert\n7.Recursive Delete\n8.Append N nodes\n9.Find midpoint\n10. Reverse LL (recursion n^2)\n11.Reverse LL (recursion n)\n12.Iterative reverse LL";
                 int choice;
                 int index;
                 cin>>choice;
@@ -313,10 +331,17 @@ int main()
                             }
                         case 11:
                             {
-                                head = recursive_reverseLL_n(head);
+                                head = revll(head);
+                                //head = p.head;
+                                //tail = p.tail;
                                 cout<<"\n current status of LL :";
                                 head->printLL(head);
                                 break;
+                            }
+                        case 12: 
+                            {
+                                head = iterative_reverse(head);
+                                head->printLL(head);
                             }
                                  
                     }
