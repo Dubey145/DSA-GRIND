@@ -20,7 +20,13 @@ class node
                     }
             }
     };
-
+class pair
+    {
+        public:
+        node * head;
+        node * tail;
+        //to return multiple values from a function just return a class object that will have the required return values as attributes
+    }; 
 node * userip() // time complexity of this function is O(n)
     {
         char choice = 'y';
@@ -189,6 +195,7 @@ void getmid(node * head, int index)
 
 node* reverseLL_recursive(node* head)
     {
+        //n^2 complexity
         if(head->next == NULL) 
             return head; 
         node * temp = reverseLL_recursive(head->next);
@@ -202,6 +209,29 @@ node* reverseLL_recursive(node* head)
         return temp;
     }
 
+pair recursive_reverseLL_n(node* head)
+    {
+        //lets maintain a tail pointer
+        if (head->next != NULL) 
+            {
+                pair ans;
+                ans.head = head;
+                ans.tail = head;//for length 1 head and tail are the same
+                return answer
+            }
+        pair temp = recursive_reverseLL_n(head->next);
+        tail->next = head;
+        head->next = temp;
+        tail = head;
+
+        pair answer;
+        answer.head = temp.head; 
+        answer.tail = temp.tail;
+
+        return answer;
+        //pending
+
+    }
 int main()
     {
         // creating a menu is pending 
@@ -210,7 +240,7 @@ int main()
         char ch = 'y';
         while(ch == 'y')
             {   
-                cout<<"------Menu------\n1.Input LL\n2.Length\n3.Find Element\n4.Insert at index\n5.Delete at index\n6.Recursive Insert\n7.Recursive Delete\n8.Append N nodes\n9.Find midpoint\n10. Reverse LL (recursion)\n";
+                cout<<"------Menu------\n1.Input LL\n2.Length\n3.Find Element\n4.Insert at index\n5.Delete at index\n6.Recursive Insert\n7.Recursive Delete\n8.Append N nodes\n9.Find midpoint\n10. Reverse LL (recursion n^2)\n11.Reverse LL (recursion n)\n";
                 int choice;
                 int index;
                 cin>>choice;
@@ -281,7 +311,13 @@ int main()
                                 head->printLL(head);
                                 break;
                             }
-                        
+                        case 11:
+                            {
+                                head = recursive_reverseLL_n(head);
+                                cout<<"\n current status of LL :";
+                                head->printLL(head);
+                                break;
+                            }
                                  
                     }
                 cout<<"\n do you want to perform more operations? (y/n)";
