@@ -177,6 +177,16 @@ node* append(node * head, int index)
         
     }
 
+void getmid(node * head, int index)
+    {
+        node * temp = head;
+        for(int i = 0; i < index; i++)
+            {
+                temp = temp->next;
+            }
+        cout<<"mid element is: "<<temp->data<<endl;
+    }
+
 int main()
     {
         // creating a menu is pending 
@@ -185,7 +195,7 @@ int main()
         char ch = 'y';
         while(ch == 'y')
             {   
-                cout<<"------Menu------\n1.Input LL\n2.Length\n3.Find Element\n4.Insert at index\n5.Delete at index\n6.Recursive Insert\n7.Recursive Delete\n8.Append N nodes\n";
+                cout<<"------Menu------\n1.Input LL\n2.Length\n3.Find Element\n4.Insert at index\n5.Delete at index\n6.Recursive Insert\n7.Recursive Delete\n8.Append N nodes\n9.Find midpoint";
                 int choice;
                 int index;
                 cin>>choice;
@@ -243,7 +253,12 @@ int main()
                                     head->printLL(head);
                                     break;
                                 }
-                                
+                        case 9 : 
+                            {
+                                int mid = (recursive_length(head))/2;
+                                getmid(head,mid);
+                            }
+
                         
                                  
                     }
