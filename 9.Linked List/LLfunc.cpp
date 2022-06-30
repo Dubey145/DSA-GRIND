@@ -283,7 +283,7 @@ int main()
                                 cout<<recursive_length(head);
                                 break;
                         case 3 : 
-                                {
+                                { 
                                     int data;
                                     cout<<"enter data to find";
                                     cin>>data;
