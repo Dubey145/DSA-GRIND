@@ -6,6 +6,9 @@ using namespace std;
 queue is a first in first out type of data structure
 entry happens from rear and exit from the front 
 
+
+
+
 insert is enqueue 
 delete is dequeue 
 
