@@ -5,21 +5,23 @@ using namespace std;
 
 // trees are a non linear data structure 
 // file system is an example of tree data structure
-
+ 
 //like the head node in LL  we will have the root node here 
-
+template <typename T>
 class tree_node
     {
         //implementing a regular tree
         public:
-            int data;
-            vector<tree_node*> child;
-        tree_node(int data) : data(data) {}
+            T data;
+            vector<tree_node<T>*> child; // tree node of type T
+        tree_node(T data) : data(data) {}
         
     };
-void printTree(tree_node *root)
+void printTree(tree_node<int> *root)
     {
-        //there is no requirement of explicitly declaring a base case 
+        //there is no requirement of explicitly declaring a base case because the code works as a base case, if we have just one child we do not print the values of its children as the first for loop condition fails
+
+        //the second for loop condition also fails as there is no child
 
         //an edge case if root = NULL 
         if(root == NULL) return;
@@ -31,61 +33,89 @@ void printTree(tree_node *root)
             {
                 //to get the no. of children 
                 printTree(root->child[i]);//sending the next child as root 
-            }
+            } 
         
     }
-tree_node* user_input()
+//level order printing 
+void level_print(tree_node<int>* root)
+    {
+        queue<tree_node<int>*> pending_nodes;
+        pending_nodes.push(root);
+
+        while(pending_nodes.size() != 0)    
+            {
+                tree_node<int>* front = pending_nodes.front();
+                cout<<front->data<<" : ";
+                pending_nodes.pop(); 
+
+                for(int i = 0; i < front->child.size(); i++) 
+                    {
+                        cout<<front->child[i]->data<<" ";
+                        pending_nodes.push(front->child[i]);
+                    }
+                cout<<endl;
+            }
+
+    }
+tree_node<int>* user_input()
     {
         int rootdata;
         cout<<"\nenter root data : ";
         cin>>rootdata;
-        tree_node* root = new tree_node(rootdata);
+        tree_node<int>* root = new tree_node<int>(rootdata);
         int children;
         cout<<"\nenter no. of children : ";
         cin>>children;
         for(int i = 0; i<children;i++)
             {
-                tree_node * subroot;
+                tree_node<int> * subroot;
                 subroot = user_input();
                 root->child.push_back(subroot);
             }
         return root;
-        //in this input function giving the input is more complex than taking it 
+        //in this input function, giving the input is more complex than taking it 
     }
-tree_node* level_input()
+tree_node<int>* level_input()
     {
+        //process elements the way they are coming
         // we will have to use a queue
         // the queue will store the element that have been entered bu are waiting for their children input
         int rootdata;
         cout<<"\nenter root data : ";
         cin>>rootdata;
-        tree_node* root = new tree_node(rootdata);
+        tree_node<int>* root = new tree_node<int>(rootdata);
         
         
         //declaring a queue 
-        queue<tree_node*> pending_nodes;
+        queue<tree_node<int>*> pending_nodes; // this queue stores those elements whose children are yet to come
+
         pending_nodes.push(root);
         while(pending_nodes.size() != 0) 
             {
-                tree_node* front = pending_nodes.front();
-                pending_nodes.pop();
+                tree_node<int>* front = pending_nodes.front();
+                pending_nodes.pop(); 
                 int children;
-                cout<<"\nenter no. of children : ";
+                cout<<"\nenter no. of children of "<<front->data<<": ";
                 cin>>children;
                 for(int i =0;i<children;i++)
                     {
                         int child_data;
-                        cout<<"enter "<<i<<"th child : "<<;
+                        cout<<"enter "<<i<<"th child of "<<front->data<<": ";
+                        cin>>child_data;
+                        tree_node<int> *Child = new tree_node<int>(child_data);
+                        front->child.push_back(Child);
+                        pending_nodes.push(Child);
                     }
             }
+        return root;
     }
 int main()
     {  
         /*
-        tree_node * root;
-        tree_node * node1 = new tree_node(1);
-        tree_node * node2 = new tree_node(2);
-        tree_node * node3 = new tree_node(3);
+        tree_node<int> * root;
+        tree_node<int> * node1 = new tree_node<int>(1);
+        tree_node<int> * node2 = new tree_node<int>(2);
+        tree_node<int> * node3 = new tree_node<int>(3);
 
         root = node1;
 
@@ -112,8 +142,9 @@ int main()
 
 
        // Taking user input
-        tree_node* root = user_input();
-        printTree(root);
-
+       //tree_node<int>* root = user_input();
+        
+        tree_node<int>* root = level_input();
+        level_print(root);
         return 0;
     }
