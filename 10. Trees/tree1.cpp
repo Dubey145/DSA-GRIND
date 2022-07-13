@@ -109,6 +109,15 @@ tree_node<int>* level_input()
             }
         return root;
     }
+int count_nodes(tree_node<int> *root)
+    {
+        int ans = 1;
+        for(int i = 0; i < root->child.size(); i++)
+            {
+                ans+=count_nodes(root->child[i]);
+            }
+        return ans;
+    }
 int main()
     {  
         /*
@@ -146,5 +155,6 @@ int main()
         
         tree_node<int>* root = level_input();
         level_print(root);
+        cout<<"\n number of nodes are : "<<count_nodes(root);
         return 0;
     }
