@@ -15,6 +15,14 @@ class tree_node
             T data;
             vector<tree_node<T>*> child; // tree node of type T
         tree_node(T data) : data(data) {}
+        ~tree_node() 
+            {
+                //call delete on children, just like in the function 
+                for(int i = 0; i < root->child.size();i++)
+                    {
+                        delete root->child[i];
+                    }
+            }
         
     };
 
@@ -24,7 +32,9 @@ void printTree(tree_node<int> *root)
 
         //the second for loop condition also fails as there is no child
 
-        //an edge case if root = NULL 
+        //an edge case if root = NULL
+
+        //this is pre order traversal
         if(root == NULL) return;
         cout<<endl<<root->data<<": "; 
         for(int i=0; i<root->child.size(); i++) 
@@ -183,6 +193,43 @@ int print_leaves(tree_node<int>* root)
             }
         return result;
     }
+//different printing 
+void preorder(tree_node<int>* root)
+    {
+        cout<<root->data<<" ";
+        for(int i = 0; i < root->child.size();i++)
+            {
+            preorder(root->child[i]);
+            }
+    }
+void postorder(tree_node<int>* root)
+    {
+        if(root->child.size() == 0)
+            {
+                cout<<root->data<<" ";
+                return;
+            }
+        for(int i = 0; i < root->child.size();i++)
+            {
+                postorder(root->child[i]); 
+                cout<<root->data;
+                return;
+            }
+    }
+    
+void delete_(tree_node<int>* root)
+    {
+        //we have to delete all the dynamically allocated nodes 
+        //delete from he leaves
+        cout<<root->data<<" Deleted\n";
+        for(int i = 0; i < root->child.size();i++)
+            {
+                delete_(root->child[i]);   
+            }
+        delete root;
+        //we would usually perform postorder deletion 
+        //another way is to use the class destructor and just typind delete root
+    }
 int main()
     {  
         /*
@@ -226,6 +273,10 @@ int main()
         cout<<"2.Height of the tree: \n";
         cout<<"3.Nodes at a level \n";
         cout<<"4.Count leaf nodes: \n";
+        cout<<"5.Pre order traversal\n";
+        cout<<"6.Post order traversal\n";
+        cout<<"7.Delete tree and exit\n";
+
         cin>>choice;
         switch(choice)
             {
@@ -254,6 +305,19 @@ int main()
                         int result = print_leaves(root); 
                         cout<<"\nnumber of leaves : "<<result<<endl;
                         break;
+                    }
+                case 5 : 
+                    {
+                        preorder(root);
+                        break;
+                    }
+                case 6 :    
+                    {
+                        //to implement
+                    }
+                case 7 : 
+                    {   
+                        delete_(root);
                     }
             }
         
