@@ -137,13 +137,37 @@ int height(tree_node<int> * root)
             }
         return max_height;
     }
-void ndoes_at_depth(int depth,tree_node<int>* root)
+void nodes_at_depth(int depth,tree_node<int>* root)
     {
         //how far a node is from the root node
         //print all nodes at depth d or at level k 
-        
 
-
+        for(int i = 0; i < root->child.size(); i++)
+            {
+                if(depth == 1)
+                    {
+                        for(int i = 0; i < root->child.size();i++)
+                            {
+                                cout<<root->child[i]->data<<" ";
+                            }
+                        return;
+                    }
+                nodes_at_depth(depth-1,root->child[i]);
+            }
+ 
+    }
+//better approach 
+void level_print(tree_node<int>* root,int depth)
+    {
+        if(depth == 0)
+            {
+                cout<<root->data<<" ";
+                return;
+            }
+        for(int i = 0; i < root->child.size();i++)
+            {
+               level_print(root->child[i],depth-1); 
+            }
     }
 int main()
     {  
@@ -182,12 +206,35 @@ int main()
         
         tree_node<int>* root = level_input();
         level_print(root);
-        cout<<"\nnumber of nodes are : "<<count_nodes(root);
-        cout<<"\nheight of the tree is : "<<height(root)+1;
-        int depth = 0;
-        cout<<"enter the depth : ";
-        cin>>depth;
-        cout<<"the nodes at this depth are : ";
-        nodes_at_depth(depth,root);
+        int choice;
+        cout<<"---------------MENU-----------------\n";
+        cout<<"1.Number of nodes: \n";
+        cout<<"2.Height of the tree: \n";
+        cout<<"3.Nodes at a level \n";
+        cin>>choice;
+        switch(choice)
+            {
+                case 1: 
+                    {
+                        cout<<"\nNumber of nodes are : "<<count_nodes(root);
+                        break;
+                    }
+                case 2: 
+                    {
+                        cout<<"\nHeight of the tree is : "<<height(root)+1;
+                        break;
+                    }
+                case 3: 
+                    {
+                        int depth = 0;
+                        cout<<"enter the depth : ";
+                        cin>>depth;
+                        cout<<"the nodes at this depth are : ";
+                        level_print(root,depth);
+                        break;
+                    }
+            }
+        
+        
         return 0;
     }
