@@ -169,6 +169,20 @@ void level_print(tree_node<int>* root,int depth)
                level_print(root->child[i],depth-1); 
             }
     }
+int print_leaves(tree_node<int>* root)
+    {
+        int result = 0;
+        if(root->child.size() == 0)
+            {
+                cout<<root->data<<" ";
+                return 1;
+            }
+        for(int i = 0; i < root->child.size();i++)
+            {
+                result += print_leaves(root->child[i]); 
+            }
+        return result;
+    }
 int main()
     {  
         /*
@@ -211,6 +225,7 @@ int main()
         cout<<"1.Number of nodes: \n";
         cout<<"2.Height of the tree: \n";
         cout<<"3.Nodes at a level \n";
+        cout<<"4.Count leaf nodes: \n";
         cin>>choice;
         switch(choice)
             {
@@ -231,6 +246,13 @@ int main()
                         cin>>depth;
                         cout<<"the nodes at this depth are : ";
                         level_print(root,depth);
+                        break;
+                    }
+                case 4: 
+                    {
+                        cout<<"leaves are :";
+                        int result = print_leaves(root); 
+                        cout<<"\nnumber of leaves : "<<result<<endl;
                         break;
                     }
             }
