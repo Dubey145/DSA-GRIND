@@ -17,6 +17,7 @@ class tree_node
         tree_node(T data) : data(data) {}
         
     };
+
 void printTree(tree_node<int> *root)
     {
         //there is no requirement of explicitly declaring a base case because the code works as a base case, if we have just one child we do not print the values of its children as the first for loop condition fails
@@ -118,6 +119,32 @@ int count_nodes(tree_node<int> *root)
             }
         return ans;
     }
+int height(tree_node<int> * root)
+    {
+        // getting the maximum height of this tree 
+        int max_height = 0;
+        int * sub_height = new int [root->child.size()];
+        for(int i = 0; i < root->child.size(); i++)
+            {
+                sub_height[i] = 1 + height(root->child[i]);
+            } 
+        for(int i = 0; i < root->child.size(); i++)
+            {
+                if(max_height < sub_height[i])
+                    {
+                        max_height = sub_height[i];
+                    }
+            }
+        return max_height;
+    }
+void ndoes_at_depth(int depth,tree_node<int>* root)
+    {
+        //how far a node is from the root node
+        //print all nodes at depth d or at level k 
+        
+
+
+    }
 int main()
     {  
         /*
@@ -125,7 +152,7 @@ int main()
         tree_node<int> * node1 = new tree_node<int>(1);
         tree_node<int> * node2 = new tree_node<int>(2);
         tree_node<int> * node3 = new tree_node<int>(3);
-
+ 
         root = node1;
 
         root->child.push_back(node2);
@@ -155,6 +182,12 @@ int main()
         
         tree_node<int>* root = level_input();
         level_print(root);
-        cout<<"\n number of nodes are : "<<count_nodes(root);
+        cout<<"\nnumber of nodes are : "<<count_nodes(root);
+        cout<<"\nheight of the tree is : "<<height(root)+1;
+        int depth = 0;
+        cout<<"enter the depth : ";
+        cin>>depth;
+        cout<<"the nodes at this depth are : ";
+        nodes_at_depth(depth,root);
         return 0;
     }
