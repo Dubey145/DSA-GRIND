@@ -4,6 +4,7 @@
 #include<algorithm>
 using namespace std;
 
+
 bool prime_noob(int num)
     {
         if(num == 1) return false;
