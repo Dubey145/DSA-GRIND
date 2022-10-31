@@ -10,6 +10,7 @@ using namespace std;
 template <typename T>
 class tree_node
     {
+ 
         //implementing a regular tree
         public:
             T data;
