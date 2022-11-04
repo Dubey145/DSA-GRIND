@@ -3,7 +3,6 @@
 #include<vector>
 #include<algorithm>
 using namespace std;
-
 int search(vector<int>& nums, int target) 
     {
         int start = 0;
