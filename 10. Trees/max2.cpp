@@ -15,7 +15,6 @@ void max2(int array[],int size)
             }
         cout<<m2;
     }
-
 int main() 
     {
             int size;
