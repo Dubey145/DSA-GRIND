@@ -2,6 +2,7 @@
 using namespace std;
 int main()
     {
+    
         cout<<"Binary Search"<<endl;
         /* the input array has to be sorted
         figure out the middle element of the array
